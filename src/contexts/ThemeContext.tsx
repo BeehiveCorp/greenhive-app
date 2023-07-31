@@ -1,12 +1,27 @@
-import React, { ReactNode, createContext, useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useColorScheme } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SplashScreen from 'expo-splash-screen';
+
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_600SemiBold,
+  Montserrat_700Bold,
+} from '@expo-google-fonts/montserrat';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 
-import { DarkTheme, LightTheme } from '@/theme';
+import { DARK_THEME, LIGHT_THEME } from '@/theme';
 import { Theme } from '@/theme/styled';
+import { Box } from '@/components';
 
 interface ThemeContextData {
   toggle: () => void;
@@ -22,11 +37,26 @@ enum ThemeSchemes {
 }
 
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(DarkTheme);
+  const [appIsReady, setAppIsReady] = useState(true);
+  const [theme, setTheme] = useState<Theme>(DARK_THEME);
   const systemTheme = useColorScheme();
 
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_600SemiBold,
+    Montserrat_700Bold,
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady && fontsLoaded) {
+      setTimeout(async () => {
+        await SplashScreen.hideAsync();
+      }, 2000);
+    }
+  }, [fontsLoaded]);
+
   const useDeviceTheme = () => {
-    setTheme(systemTheme === ThemeSchemes.Dark ? DarkTheme : LightTheme);
+    setTheme(systemTheme === ThemeSchemes.Dark ? DARK_THEME : LIGHT_THEME);
   };
 
   const useStoredTheme = async () => {
@@ -37,14 +67,14 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       return;
     }
 
-    setTheme(storedTheme === ThemeSchemes.Dark ? DarkTheme : LightTheme);
+    setTheme(storedTheme === ThemeSchemes.Dark ? DARK_THEME : LIGHT_THEME);
   };
 
   const toggle = async () => {
-    const newTheme = theme === DarkTheme ? LightTheme : DarkTheme;
+    const newTheme = theme === DARK_THEME ? LIGHT_THEME : DARK_THEME;
 
     const newThemeScheme =
-      theme === DarkTheme ? ThemeSchemes.Light : ThemeSchemes.Dark;
+      theme === DARK_THEME ? ThemeSchemes.Light : ThemeSchemes.Dark;
 
     setTheme(newTheme);
 
@@ -55,9 +85,17 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     useStoredTheme();
   }, []);
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <ThemeContext.Provider value={{ toggle }}>
-      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
+      <StyledThemeProvider theme={theme}>
+        <Box onLayout={onLayoutRootView} style={{ flex: 1 }}>
+          {children}
+        </Box>
+      </StyledThemeProvider>
     </ThemeContext.Provider>
   );
 };

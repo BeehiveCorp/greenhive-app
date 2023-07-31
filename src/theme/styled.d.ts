@@ -8,6 +8,7 @@ export type StatusTheme = {
 };
 
 export type Theme = {
+  name: 'dark' | 'light';
   primary: string;
   secondary: string;
   container: string;
