@@ -4,3 +4,5 @@ export enum TOAST_VARIANTS {
   Warning = 'warning',
   Info = 'info',
 }
+
+export const SPLASH_DURATION_IN_MILLISECONDS = 4500;

@@ -22,6 +22,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 import { DARK_THEME, LIGHT_THEME } from '@/theme';
 import { Theme } from '@/theme/styled';
 import { Box } from '@/components';
+import { SPLASH_DURATION_IN_MILLISECONDS } from '@/utils/constants';
 
 interface ThemeContextData {
   toggle: () => void;
@@ -51,7 +52,7 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (appIsReady && fontsLoaded) {
       setTimeout(async () => {
         await SplashScreen.hideAsync();
-      }, 2000);
+      }, SPLASH_DURATION_IN_MILLISECONDS);
     }
   }, [fontsLoaded]);
 
