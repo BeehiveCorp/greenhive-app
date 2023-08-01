@@ -25,8 +25,8 @@ export const Wrapper = styled(Box).attrs(() => ({
     return focused ? background : 'transparent';
   }};
 
-  height: ${BOTTOM_TAB_ITEM_SIZE - BOTTOM_TAB_BORDER_WIDTH / 2}px;
+  height: ${BOTTOM_TAB_ITEM_SIZE - BOTTOM_TAB_BORDER_WIDTH * 2}px;
+  width: ${BOTTOM_TAB_ITEM_SIZE - BOTTOM_TAB_BORDER_WIDTH * 2}px;
   bottom: ${Platform.OS === 'ios' ? -15 : 0}px;
-  width: 100%;
   border-radius: ${BOTTOM_TAB_ITEM_SIZE}px;
 `;

@@ -1,7 +1,6 @@
 import RNToast, { ToastShowParams } from 'react-native-toast-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import * as SplashScreen from 'expo-splash-screen';
 
@@ -22,12 +21,10 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <SafeAreaProvider>
-          <BottomSheetModalProvider>
-            <Navigation />
-            <RNToast config={toastConfig} topOffset={64} />
-          </BottomSheetModalProvider>
-        </SafeAreaProvider>
+        <BottomSheetModalProvider>
+          <Navigation />
+          <RNToast config={toastConfig} topOffset={64} />
+        </BottomSheetModalProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

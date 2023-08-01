@@ -22,7 +22,7 @@ const useBottomTabStyles = () => {
       width: BOTTOM_TAB_WIDTH,
       height: BOTTOM_TAB_ITEM_SIZE,
       left: (DEVICE_DIMENSIONS.width - BOTTOM_TAB_WIDTH) / 2,
-      bottom: Platform.OS === 'ios' ? 0 : 32,
+      bottom: 32,
 
       borderRadius: BOTTOM_TAB_WIDTH,
       borderWidth: BOTTOM_TAB_BORDER_WIDTH,
@@ -54,5 +54,14 @@ export const BlurWrapper = styled(BlurView).attrs(({ theme }) => ({
 }))`
   width: ${() => BOTTOM_TAB_WIDTH}px;
   background-color: ${({ theme }) => chroma(theme.container).alpha(0.2).hex()};
+  ${{ ...StyleSheet.absoluteFillObject }}
+`;
+
+export const CommonWrapper = styled.View`
+  width: ${() => BOTTOM_TAB_WIDTH}px;
+  background-color: ${({ theme }) =>
+    chroma(theme.name === 'dark' ? theme.container : theme.background)
+      .alpha(0.97)
+      .hex()};
   ${{ ...StyleSheet.absoluteFillObject }}
 `;

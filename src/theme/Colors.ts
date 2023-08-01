@@ -23,7 +23,7 @@ export const LIGHT_THEME: Theme = Object.freeze({
   name: 'light',
   background: '#FCFFF8',
   container: '#DCE2D6',
-  border: '#EBEBEB',
+  border: '#F2F0F0',
   title: '#000000',
   text: '#5B5E55',
   primary: '#3A7347',

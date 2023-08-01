@@ -9,8 +9,10 @@ import { Box } from '@/components';
 
 const Tab = createBottomTabNavigator();
 
-import useBottomTabStyles, { BlurWrapper } from './styles';
+import useBottomTabStyles, { BlurWrapper, CommonWrapper } from './styles';
+
 import TabBarItem from '../TabBarItem';
+import { Platform } from 'react-native';
 
 const AuthBottomNavigation: React.FC = () => {
   const bottomTabStyles = useBottomTabStyles();
@@ -21,7 +23,7 @@ const AuthBottomNavigation: React.FC = () => {
     tabBarStyle: bottomTabStyles.wrapper,
     tabBarBackground: () => (
       <Box style={bottomTabStyles.background}>
-        <BlurWrapper />
+        {Platform.OS === 'ios' ? <BlurWrapper /> : <CommonWrapper />}
       </Box>
     ),
   };

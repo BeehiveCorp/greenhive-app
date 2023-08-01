@@ -8,5 +8,4 @@ export const BOTTOM_TAB_QUANTITY = 3;
 export const BOTTOM_TAB_BORDER_WIDTH = 1;
 
 // The bottom tab should contain the width of all items
-export const BOTTOM_TAB_WIDTH =
-  BOTTOM_TAB_ITEM_SIZE * BOTTOM_TAB_QUANTITY - BOTTOM_TAB_BORDER_WIDTH * 2;
+export const BOTTOM_TAB_WIDTH = BOTTOM_TAB_ITEM_SIZE * BOTTOM_TAB_QUANTITY;
