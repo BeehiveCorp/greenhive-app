@@ -21,9 +21,9 @@ export const DARK_THEME: Theme = Object.freeze({
 
 export const LIGHT_THEME: Theme = Object.freeze({
   name: 'light',
-  background: '#DEE2D4',
-  container: '#D9DECE',
-  border: '#B9BEAA',
+  background: '#FCFFF8',
+  container: '#DCE2D6',
+  border: '#EBEBEB',
   title: '#000000',
   text: '#5B5E55',
   primary: '#3A7347',
