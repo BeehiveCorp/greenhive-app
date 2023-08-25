@@ -1,39 +1,50 @@
-import { useContext, useRef } from 'react';
-import { Button, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
-import GorgonBottomSheet from '@gorhom/bottom-sheet';
+import { Wrapper } from '@/components';
 
-import { Box, Text, Wrapper, BottomSheet } from '@/components';
-import { ThemeContext } from '@/contexts/ThemeContext';
+import { Post } from './components/Post';
 
 export default function Feed() {
-  const { toggle } = useContext(ThemeContext);
-  const bottomSheetRef = useRef<GorgonBottomSheet>(null);
-
-  const callBottomSheet = () => {
-    bottomSheetRef?.current?.expand();
-  };
-
   return (
     <Wrapper>
       <ScrollView>
-        <Box style={{ flex: 1 }} alignItemsCenter justifyContentCenter>
-          <Text size="sm">Feed</Text>
+        <Post
+          author={'Daivd'}
+          reactions={100}
+          url={
+            'https://www.arquiprojeto.art.br/wp-content/uploads/2021/05/1_38_ggh7VMS88m1a2e4JjXQ-scaled.jpeg'
+          }
+          username={'@davidlindo'}
+          comments={128378273}
+        />
 
-          <Button title="Toggle theme" onPress={toggle} />
-          <Button title="Call bottom sheet" onPress={callBottomSheet} />
-        </Box>
+        <Post
+          author={'Isa'}
+          reactions={2133}
+          url={
+            'https://www.arquiprojeto.art.br/wp-content/uploads/2021/05/1_38_ggh7VMS88m1a2e4JjXQ-scaled.jpeg'
+          }
+          username={'@davidlindo'}
+        />
+
+        <Post
+          author={'Vylle'}
+          reactions={100}
+          url={
+            'https://www.arquiprojeto.art.br/wp-content/uploads/2021/05/1_38_ggh7VMS88m1a2e4JjXQ-scaled.jpeg'
+          }
+          username={'@davidlindo'}
+        />
+
+        <Post
+          author={'Daivd'}
+          reactions={100}
+          url={
+            'https://www.arquiprojeto.art.br/wp-content/uploads/2021/05/1_38_ggh7VMS88m1a2e4JjXQ-scaled.jpeg'
+          }
+          username={'@davidlindo'}
+        />
       </ScrollView>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        title="Oi, bottom"
-        description="Essa é a descrição dessa brincadeira"
-      >
-        <Box>
-          <Text>Esse é o feed, ein</Text>
-        </Box>
-      </BottomSheet>
     </Wrapper>
   );
 }
