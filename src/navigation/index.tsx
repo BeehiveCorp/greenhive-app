@@ -7,7 +7,7 @@ import { useTheme } from 'styled-components/native';
 export default function Navigation() {
   const { background, name } = useTheme();
 
-  const authenticated = true;
+  const authenticated = false;
 
   return (
     <>
