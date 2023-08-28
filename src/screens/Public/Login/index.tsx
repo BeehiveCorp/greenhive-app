@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTheme } from 'styled-components/native';
 
-import { Box, Greenhive, Input, Text, Wrapper } from '@/components';
+import { Box, Button, Greenhive, Input, Text, Wrapper } from '@/components';
 import { FONT_FAMILY } from '@/theme';
 
 import { Form, Logo, Link, PasswordLink } from './styles';
@@ -47,6 +47,13 @@ export default function Login() {
           />
 
           <PasswordLink>Esqueci minha senha</PasswordLink>
+
+          <Button
+            containerStyle={{ marginTop: 32, width: 54, alignSelf: 'flex-end' }}
+            icon="arrow-right"
+            primary
+            onPress={() => console.log('pressed')}
+          />
         </Form>
       </Box>
     </Wrapper>

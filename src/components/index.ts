@@ -6,3 +6,4 @@ export { default as Scrollable } from './Scrollable';
 export { default as BottomSheet } from './BottomSheet';
 export { default as Greenhive } from './Greenhive';
 export { default as Input } from './Input';
+export { default as Button } from './Button';
