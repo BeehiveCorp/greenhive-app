@@ -24,6 +24,8 @@ import { Theme } from '@/theme/styled';
 import { Box } from '@/components';
 import { SPLASH_DURATION_IN_MILLISECONDS } from '@/utils/constants';
 
+import { useUser } from './UserContext';
+
 interface ThemeContextData {
   toggle: () => void;
 }
@@ -38,9 +40,10 @@ enum ThemeSchemes {
 }
 
 const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [appIsReady, setAppIsReady] = useState(true);
   const [theme, setTheme] = useState<Theme>(DARK_THEME);
   const systemTheme = useColorScheme();
+
+  const { user } = useUser();
 
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
@@ -49,12 +52,12 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   const onLayoutRootView = useCallback(async () => {
-    if (appIsReady && fontsLoaded) {
+    if (fontsLoaded && user !== undefined) {
       setTimeout(async () => {
         await SplashScreen.hideAsync();
       }, SPLASH_DURATION_IN_MILLISECONDS);
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, user]);
 
   const useDeviceTheme = () => {
     setTheme(systemTheme === ThemeSchemes.Dark ? DARK_THEME : LIGHT_THEME);
@@ -86,7 +89,7 @@ const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     useStoredTheme();
   }, []);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || user === undefined) {
     return null;
   }
 

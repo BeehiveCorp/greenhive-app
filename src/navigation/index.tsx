@@ -3,11 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 
 import { AuthStackNavigation, PublicStackNavigation } from './components';
 import { useTheme } from 'styled-components/native';
+import { useUser } from '@/contexts/UserContext';
 
 export default function Navigation() {
-  const { background, name } = useTheme();
+  const { name } = useTheme();
+  const { user } = useUser();
 
-  const authenticated = false;
+  const authenticated = !!user?.id;
 
   return (
     <>

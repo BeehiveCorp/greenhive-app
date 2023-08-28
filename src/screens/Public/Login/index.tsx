@@ -1,23 +1,38 @@
 import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from 'styled-components/native';
 
 import { Box, Button, Greenhive, Input, Text, Wrapper } from '@/components';
-import { FONT_FAMILY } from '@/theme';
+import { useUser } from '@/contexts/UserContext';
+import { UserService } from '@/services';
+import { showToast } from '@/utils/utilities';
 
 import { Form, Logo, Link, PasswordLink } from './styles';
-import { Masks } from 'react-native-mask-input';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
+  const { storeUser } = useUser();
   const theme = useTheme();
+
+  const [email, setEmail] = useState('david.adm@gmail.com');
+  const [password, setPassword] = useState('12345678');
+
+  const onLogin = async () => {
+    const { data, error } = await UserService.login({ email, password });
+
+    if (error || !data?.user) {
+      showToast({ message: error });
+      return;
+    }
+
+    storeUser(data?.user);
+    await AsyncStorage.setItem('@token', JSON.stringify(data?.token));
+  };
 
   return (
     <Wrapper>
       <Box style={{ flex: 1 }} alignItemsCenter justifyContentCenter>
         <Logo>
-          <Greenhive.Icon size={60} />
+          <Greenhive.Icon size={60} color={theme.title} />
         </Logo>
 
         <Form>
@@ -32,8 +47,8 @@ export default function Login() {
 
           <Input
             label="Username"
-            value={username}
-            onChangeText={setUsername}
+            value={email}
+            onChangeText={setEmail}
             containerStyle={{ marginBottom: 16 }}
             placeholder="Insira seu username"
           />
@@ -52,7 +67,7 @@ export default function Login() {
             containerStyle={{ marginTop: 32, width: 54, alignSelf: 'flex-end' }}
             icon="arrow-right"
             primary
-            onPress={() => console.log('pressed')}
+            onPress={onLogin}
           />
         </Form>
       </Box>

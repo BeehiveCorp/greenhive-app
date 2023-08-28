@@ -5,7 +5,10 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { Toast } from '@/components';
+
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { UserProvider } from '@/contexts/UserContext';
+
 import Navigation from '@/navigation';
 
 SplashScreen.preventAutoHideAsync();
@@ -20,12 +23,14 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider>
-        <BottomSheetModalProvider>
-          <Navigation />
-          <RNToast config={toastConfig} topOffset={64} />
-        </BottomSheetModalProvider>
-      </ThemeProvider>
+      <UserProvider>
+        <ThemeProvider>
+          <BottomSheetModalProvider>
+            <Navigation />
+            <RNToast config={toastConfig} topOffset={64} />
+          </BottomSheetModalProvider>
+        </ThemeProvider>
+      </UserProvider>
     </GestureHandlerRootView>
   );
 }
