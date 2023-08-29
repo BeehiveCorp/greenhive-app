@@ -1,11 +1,9 @@
-import { useCallback, useRef, useState } from 'react';
-import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useCallback, useEffect, useState } from 'react';
 import { interpolate } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import { useTheme } from 'styled-components/native';
 
-import { BottomSheet, Box, Button, Text } from '@/components';
+import { Box, Button } from '@/components';
 import { useUser } from '@/contexts/UserContext';
 import { THero } from '@/services/HeroService';
 import { DEVICE_DIMENSIONS, GLOBAL_METRICS } from '@/theme';
@@ -14,10 +12,11 @@ import { User } from '@/services';
 
 import { HeroCard, Avatar, Name, Description } from './styles';
 
-const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
-  onNextStep,
-  heroes,
-}) => {
+const Step4: React.FC<{
+  onNextStep: () => void;
+  openBottomSheet: (hero: THero) => void;
+  heroes: THero[];
+}> = ({ onNextStep, openBottomSheet, heroes }) => {
   const getInitialIndex = () => {
     const idx = heroes.findIndex((hero) => hero.id === user?.hero_id);
     if (idx !== -1) return idx;
@@ -27,8 +26,6 @@ const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
   const theme = useTheme();
   const { user, setUser } = useUser();
   const [selectedHero, setSelectedHero] = useState<THero>(heroes[getInitialIndex()]);
-
-  const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
   const itemSize = 240;
   const centerOffset = DEVICE_DIMENSIONS.width / 2 - itemSize / 2;
@@ -80,12 +77,11 @@ const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
     onNextStep();
   };
 
-  const openBottomSheet = () => {
-    console.log('oi');
-    bottomSheetRef?.current?.expand();
-  };
-
-  const shouldButtonDisable = user?.hero_id?.length === 0;
+  useEffect(() => {
+    if (!user?.hero_id) {
+      setUser({ ...user, hero_id: heroes[0].id } as User);
+    }
+  }, []);
 
   return (
     <>
@@ -101,8 +97,8 @@ const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
           data={heroes}
           defaultIndex={getInitialIndex()}
           onScrollEnd={(index) => setSelectedHero(heroes[index])}
-          renderItem={({ item, index }) => (
-            <HeroCard>
+          renderItem={({ item }) => (
+            <HeroCard key={item.id}>
               <Avatar source={{ uri: getRelativeUri(item.avatar_url) }} />
 
               <Name heading size="lg">
@@ -116,7 +112,7 @@ const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
                 icon="cards-playing-outline"
                 containerStyle={{ backgroundColor: theme.background }}
                 textStyle={{ color: theme.primary }}
-                onPress={openBottomSheet}
+                onPress={() => openBottomSheet(item)}
               />
             </HeroCard>
           )}
@@ -131,14 +127,6 @@ const Step4: React.FC<{ onNextStep: () => void; heroes: THero[] }> = ({
           onPress={onHeroSelect}
         />
       </Box>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        title={selectedHero.name}
-        description="Aqui está a lore desse herói"
-      >
-        <Text>{selectedHero.lore}</Text>
-      </BottomSheet>
     </>
   );
 };

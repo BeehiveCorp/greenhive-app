@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { HeroService, THero } from '@/services/HeroService';
 import { useUser } from '@/contexts/UserContext';
-import { Wrapper, Box, Button, Text } from '@/components';
+import { Wrapper, Box, Text, BottomSheet } from '@/components';
 import { showToast } from '@/utils/utilities';
 import { GLOBAL_METRICS } from '@/theme';
+import { UserService } from '@/services';
 
 import { SignInSteps, StepsProgress } from './components';
 
@@ -18,13 +21,33 @@ import { HEADERS } from './data';
 
 export default function SignIn({ navigation }: SignInScreenProps) {
   const theme = useTheme();
-  const { user } = useUser();
+  const { user, storeUser } = useUser();
 
   const [step, setStep] = useState(1);
   const [heroes, setHeroes] = useState<THero[]>([]);
+  const [selectedHero, setSelectedHero] = useState<THero | null>(heroes[0] ?? null);
 
-  const signNewUserIn = () => {
+  const bottomSheetRef = useRef<BottomSheetMethods>(null);
+
+  const signNewUserIn = async () => {
     console.log('Sign In', user);
+    if (!user) return;
+
+    const { data, error } = await UserService.create({
+      email: user.email,
+      name: user.name,
+      username: user.username,
+      password: user?.password ?? '',
+      hero_id: user?.hero_id ?? '',
+    });
+
+    if (error || !data) {
+      showToast({ message: error });
+      return;
+    }
+
+    storeUser(data?.user);
+    await AsyncStorage.setItem('@token', JSON.stringify(data?.token));
   };
 
   const onPreviousStepPress = () => {
@@ -48,12 +71,17 @@ export default function SignIn({ navigation }: SignInScreenProps) {
   const getHeroes = async () => {
     const { data, error } = await HeroService.getAll();
 
-    if (error) {
+    if (error || !data) {
       showToast({ message: error });
       return;
     }
 
     setHeroes(data ?? []);
+  };
+
+  const openBottomSheet = (hero: THero) => {
+    setSelectedHero(hero);
+    bottomSheetRef?.current?.expand();
   };
 
   useEffect(() => {
@@ -104,12 +132,25 @@ export default function SignIn({ navigation }: SignInScreenProps) {
           ) : step === 3 ? (
             <SignInSteps.Step3 onNextStep={onNextStepPress} />
           ) : step === 4 ? (
-            <SignInSteps.Step4 heroes={heroes} onNextStep={onNextStepPress} />
+            <SignInSteps.Step4
+              heroes={heroes}
+              onNextStep={onNextStepPress}
+              openBottomSheet={openBottomSheet}
+            />
           ) : (
             <SignInSteps.Step5 onNextStep={onNextStepPress} />
           )}
         </Box>
       </Content>
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        title={selectedHero?.name}
+        description="Aqui está a lore desse herói"
+        snapPoints={[500]}
+      >
+        <Text>{selectedHero?.lore}</Text>
+      </BottomSheet>
     </Wrapper>
   );
 }

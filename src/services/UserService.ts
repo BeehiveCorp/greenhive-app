@@ -14,6 +14,14 @@ export interface FindByEmailPayload {
   email: string;
 }
 
+export interface CreatePayload {
+  name: string;
+  email: string;
+  password: string;
+  username: string;
+  hero_id: string;
+}
+
 export type User = {
   id?: string | null;
   password?: string | null;
@@ -76,7 +84,22 @@ class UserService {
     }
   };
 
-  static create = async () => {};
+  static create = async (
+    payload: CreatePayload
+  ): Promise<{ data?: { user: User; token: string }; error?: string }> => {
+    const api = await createAxiosInstance();
+
+    try {
+      const { data } = await api.post('/user/create', payload);
+      return { data };
+    } catch (error) {
+      const exception = error as AxiosError<{ message?: string; error?: string }>;
+
+      return {
+        error: exception.response?.data?.message || exception.response?.data?.error,
+      };
+    }
+  };
 }
 
 export { UserService };

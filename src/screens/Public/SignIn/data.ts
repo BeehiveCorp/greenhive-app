@@ -13,9 +13,9 @@ export const HEADERS = [
     description: 'Tenha certeza que vá lembrar dela!',
   },
   {
-    title: 'Selecione seu perfil',
+    title: 'Selecione um herói',
     description:
-      'Escolha o que mais fizer sentido para você, a experiência será baseada nisso.',
+      'Escolha o que mais fizer sentido para você, a princípio a experiência será baseada nele.',
   },
   {
     title: 'Hora de começar!',
