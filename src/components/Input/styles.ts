@@ -40,7 +40,7 @@ export const InputText = styled(MaskInput).attrs<InputProps>(({ theme }) => ({
   padding: 0 16px;
   color: ${({ theme, messageType }) => {
     if (messageType) return messageType === 'ERROR' ? theme.error : theme.success;
-    return chroma(theme.text).alpha(0.5).hex();
+    return chroma(theme.text).alpha(1).hex();
   }};
   font-family: ${FONT_FAMILY.SemiBold};
   font-size: ${FONT_SIZE.Medium}px;

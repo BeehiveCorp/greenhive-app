@@ -17,3 +17,7 @@ export const showToast = ({
     },
     visibilityTime: duration,
   });
+
+export function getRelativeUri(path: string): string {
+  return `http://localhost:3333${path}`;
+}

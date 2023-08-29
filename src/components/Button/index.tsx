@@ -45,6 +45,7 @@ const Button: React.FC<ButtonProps> = ({
             ) : (
               !!icon && (
                 <Icon
+                  color={textStyle?.color}
                   primary={primary}
                   secondary={secondary}
                   isDisabled={isDisabled}

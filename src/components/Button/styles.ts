@@ -33,10 +33,12 @@ export const Text = styled(DefaultText)<ButtonProps>`
 `;
 
 export const Icon = styled(MaterialCommunityIcons).attrs<ButtonProps>(
-  ({ primary, secondary, isDisabled, theme }) => ({
+  ({ primary, secondary, isDisabled, theme, color }) => ({
     size: 24,
     color: isDisabled
       ? theme.text
+      : color
+      ? color
       : primary
       ? theme.primary
       : secondary

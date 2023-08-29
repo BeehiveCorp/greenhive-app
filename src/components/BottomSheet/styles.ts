@@ -11,7 +11,7 @@ const useBottomSheetStyles = () => {
       backgroundColor: theme.container,
     },
     sheetContainer: {
-      marginBottom: -20,
+      marginBottom: -64,
     },
     sheet: {
       marginHorizontal: 8,

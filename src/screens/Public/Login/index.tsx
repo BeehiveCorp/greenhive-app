@@ -9,7 +9,9 @@ import { showToast } from '@/utils/utilities';
 
 import { Form, Logo, Link, PasswordLink } from './styles';
 
-export default function Login() {
+import { LoginScreenProps } from './types';
+
+export default function Login({ navigation }: LoginScreenProps) {
   const { storeUser } = useUser();
   const theme = useTheme();
 
@@ -28,6 +30,10 @@ export default function Login() {
     await AsyncStorage.setItem('@token', JSON.stringify(data?.token));
   };
 
+  const onNewAccountPress = () => {
+    navigation.navigate('SignIn');
+  };
+
   return (
     <Wrapper>
       <Box style={{ flex: 1 }} alignItemsCenter justifyContentCenter>
@@ -42,7 +48,7 @@ export default function Login() {
 
           <Text size="sm" style={{ marginTop: 16, marginBottom: 48 }}>
             Faça login ou{' '}
-            <Link onPress={() => console.log('new')}>crie uma nova conta.</Link>
+            <Link onPress={onNewAccountPress}>crie uma nova conta.</Link>
           </Text>
 
           <Input

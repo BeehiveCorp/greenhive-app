@@ -14,6 +14,7 @@ type UserContextType = {
   user?: User | null;
   logout: () => void;
   storeUser: (user: User) => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -48,7 +49,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, logout, storeUser }}>
+    <UserContext.Provider value={{ user, logout, storeUser, setUser }}>
       {children}
     </UserContext.Provider>
   );
