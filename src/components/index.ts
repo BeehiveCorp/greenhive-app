@@ -8,3 +8,4 @@ export { default as Greenhive } from './Greenhive';
 export { default as Input } from './Input';
 export { default as Button } from './Button';
 export { default as XpProgress } from './XpProgress';
+export { default as Avatar } from './Avatar';
