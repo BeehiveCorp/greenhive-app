@@ -20,7 +20,7 @@ const UserContext = createContext<GamificationContextType | undefined>(undefined
 export const GamificationProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { user, setUser } = useUser();
+  const { user, storeUser } = useUser();
 
   const updateStats = async ({ ambicoinsGains, xpGains }: UpdateStatsParams) => {
     const { data, error } = await UserService.updateGamifiedStats({
@@ -31,12 +31,12 @@ export const GamificationProvider: React.FC<{ children: ReactNode }> = ({
 
     if (!error) {
       // @ts-expect-error
-      setUser((prev) => ({
-        ...prev,
-        ambicoins: data?.ambicoins,
-        xp: data?.xp,
-        level: data?.level,
-      }));
+      storeUser({
+        ...user,
+        ambicoins: data!.ambicoins,
+        xp: data!.xp,
+        level: data!.level,
+      });
     }
   };
 

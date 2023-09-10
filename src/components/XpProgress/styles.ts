@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import Text from '@/components/Text';
-import { FONT_FAMILY, GLOBAL_METRICS } from '@/theme';
+import { FONT_FAMILY, FONT_SIZE, GLOBAL_METRICS } from '@/theme';
 
 export const Container = styled(BlurView).attrs(({ theme }) => ({
   tint: theme.name,
@@ -37,12 +37,15 @@ export const Progress = styled(Animated.View)`
   height: 100%;
 `;
 
-export const Xp = styled(Animated.Text)<{ xpTextWidth: number }>`
+export const Xp = styled(Animated.Text)<{ xpTextWidth: number; percentage: number }>`
   position: absolute;
   font-family: ${FONT_FAMILY.Bold};
+  font-size: ${FONT_SIZE.SuperSmall}px;
   color: ${({ theme }) => theme.primary};
   align-self: flex-start;
-  transform: translateX(-${({ xpTextWidth }) => xpTextWidth}px);
+  transform: translateX(
+    -${({ xpTextWidth, percentage }) => (percentage < 50 ? 0 : xpTextWidth)}px
+  );
   top: -24px;
 `;
 

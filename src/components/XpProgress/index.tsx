@@ -1,14 +1,10 @@
-import { useEffect, useState } from 'react';
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import { useState } from 'react';
+import { useAnimatedStyle, withSpring } from 'react-native-reanimated';
+import { Text } from 'react-native';
 
 import { useUser } from '@/contexts/UserContext';
 import { useGamification } from '@/contexts/GamificationContext';
+import { FONT_SIZE } from '@/theme';
 
 import Box from '../Box';
 
@@ -48,9 +44,13 @@ const XpProgress = () => {
           <Xp
             onLayout={(e) => setXpTextWidth(e.nativeEvent.layout.width)}
             xpTextWidth={+xpTextWidth.toFixed(0)}
+            percentage={percentage}
             style={animatedProgressLeft}
           >
-            {user?.xp} / {nextLevelXpNeeded} xp
+            {user?.xp} /{' '}
+            <Text style={{ fontSize: FONT_SIZE.SuperSmall - 4 }}>
+              {nextLevelXpNeeded} xp
+            </Text>
           </Xp>
 
           <Bar onLayout={(e) => setMaxBarWidth(e.nativeEvent.layout.width)}>

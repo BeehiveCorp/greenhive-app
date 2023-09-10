@@ -8,7 +8,7 @@ export const Container = styled(Box)`
 `;
 
 export const Data = styled(Box)`
-  margin-left: 24px;
+  margin-left: 20px;
 `;
 
 export const Hero = styled(Box)`
@@ -27,7 +27,16 @@ export const Ambicoins = styled(Box)`
   align-self: flex-start;
 `;
 
-export const Quantity = styled(Text)`
+export const Quantity = styled(Text).attrs(() => ({ size: 'sm' }))`
   color: ${({ theme }) => theme.secondary};
   margin-right: 4px;
+  font-family: ${FONT_FAMILY.SemiBold};
+`;
+
+export const AvatarContainer = styled(Box)``;
+
+export const LevelContainer = styled(Box)`
+  position: absolute;
+  right: -12px;
+  bottom: -8px;
 `;
