@@ -17,7 +17,7 @@ const MainHeader = () => {
     <Container horizontal>
       <Box horizontal spaceBetween style={{ flex: 1 }}>
         <Box horizontal alignItemsCenter>
-          <Avatar size={64} />
+          <Avatar size={56} />
 
           <Data>
             <Text heading>{user?.name}</Text>
@@ -36,7 +36,7 @@ const MainHeader = () => {
         </Box>
 
         <Ambicoins horizontal alignItemsCenter>
-          <Quantity>300</Quantity>
+          <Quantity>{user?.ambicoins}</Quantity>
           <MaterialCommunityIcons
             name="tree-outline"
             size={20}

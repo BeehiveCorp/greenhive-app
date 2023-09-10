@@ -8,19 +8,19 @@ import React, {
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { User } from '@/services';
+import { TUser } from '@/services';
 
 type UserContextType = {
-  user?: User | null;
+  user: TUser | null | undefined;
   logout: () => void;
-  storeUser: (user: User) => void;
-  setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>;
+  storeUser: (user: TUser) => void;
+  setUser: React.Dispatch<React.SetStateAction<TUser | null | undefined>>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null | undefined>(undefined);
+  const [user, setUser] = useState<TUser | null | undefined>(undefined);
 
   const getStoredUser = async () => {
     const storedUser = await AsyncStorage.getItem('@user');
@@ -39,7 +39,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
 
-  const storeUser = async (userToStore: User) => {
+  const storeUser = async (userToStore: TUser) => {
     setUser(userToStore);
     await AsyncStorage.setItem('@user', JSON.stringify(userToStore));
   };

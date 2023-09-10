@@ -10,6 +10,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import { UserProvider } from '@/contexts/UserContext';
 
 import Navigation from '@/navigation';
+import { GamificationProvider } from '@/contexts/GamificationContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,12 +25,14 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <UserProvider>
-        <ThemeProvider>
-          <BottomSheetModalProvider>
-            <Navigation />
-            <RNToast config={toastConfig} topOffset={64} />
-          </BottomSheetModalProvider>
-        </ThemeProvider>
+        <GamificationProvider>
+          <ThemeProvider>
+            <BottomSheetModalProvider>
+              <Navigation />
+              <RNToast config={toastConfig} topOffset={64} />
+            </BottomSheetModalProvider>
+          </ThemeProvider>
+        </GamificationProvider>
       </UserProvider>
     </GestureHandlerRootView>
   );

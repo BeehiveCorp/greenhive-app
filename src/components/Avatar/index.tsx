@@ -13,7 +13,10 @@ const Avatar: React.FC<AvatarProps> = ({ size = 56, containerStyle }) => {
   return (
     <Container size={size} style={containerStyle}>
       {user?.avatar_url ? (
-        <Image source={{ uri: getRelativeUri(user.avatar_url) }} />
+        <Image
+          source={{ uri: getRelativeUri(user.avatar_url) }}
+          style={{ width: '100%', height: '100%' }}
+        />
       ) : (
         <Initials>{getInitials(user?.name ?? '')}</Initials>
       )}

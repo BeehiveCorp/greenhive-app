@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import createAxiosInstance from './api';
+import { THero } from './HeroService';
 
 export interface LoginPayload {
   email: string;
@@ -22,7 +23,13 @@ export interface CreatePayload {
   hero_id: string;
 }
 
-export type User = {
+export interface UpdateGamifiedStatsPayload {
+  user_id: string;
+  ambicoins_gains: number;
+  xp_gains: number;
+}
+
+export type TUser = {
   id?: string | null;
   password?: string | null;
   name: string;
@@ -30,12 +37,17 @@ export type User = {
   email: string;
   avatar_url: string;
   hero_id?: string | null;
+  hero: THero;
+  ambicoins: number;
+  company: string;
+  xp: number;
+  level: number;
 };
 
 class UserService {
   static login = async (
     payload: LoginPayload
-  ): Promise<{ data?: { user: User; token: string }; error?: string }> => {
+  ): Promise<{ data?: { user: TUser; token: string }; error?: string }> => {
     const api = await createAxiosInstance();
 
     try {
@@ -52,7 +64,7 @@ class UserService {
 
   static findByUsername = async (
     payload: FindByUsernamePayload
-  ): Promise<{ data?: User | null; error?: string }> => {
+  ): Promise<{ data?: TUser | null; error?: string }> => {
     const api = await createAxiosInstance();
 
     try {
@@ -69,7 +81,7 @@ class UserService {
 
   static findByEmail = async (
     payload: FindByEmailPayload
-  ): Promise<{ data?: User | null; error?: string }> => {
+  ): Promise<{ data?: TUser | null; error?: string }> => {
     const api = await createAxiosInstance();
 
     try {
@@ -86,11 +98,28 @@ class UserService {
 
   static create = async (
     payload: CreatePayload
-  ): Promise<{ data?: { user: User; token: string }; error?: string }> => {
+  ): Promise<{ data?: { user: TUser; token: string }; error?: string }> => {
     const api = await createAxiosInstance();
 
     try {
       const { data } = await api.post('/user/create', payload);
+      return { data };
+    } catch (error) {
+      const exception = error as AxiosError<{ message?: string; error?: string }>;
+
+      return {
+        error: exception.response?.data?.message || exception.response?.data?.error,
+      };
+    }
+  };
+
+  static updateGamifiedStats = async (
+    payload: UpdateGamifiedStatsPayload
+  ): Promise<{ data?: TUser; error?: string }> => {
+    const api = await createAxiosInstance();
+
+    try {
+      const { data } = await api.put('/user/update-gamified-stats', payload);
       return { data };
     } catch (error) {
       const exception = error as AxiosError<{ message?: string; error?: string }>;

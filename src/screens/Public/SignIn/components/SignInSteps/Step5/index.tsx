@@ -1,4 +1,4 @@
-import { Image } from 'expo-image';
+import { Image } from 'react-native';
 
 import { Box, Button } from '@/components';
 import { GLOBAL_METRICS } from '@/theme';

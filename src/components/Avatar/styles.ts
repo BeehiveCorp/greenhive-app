@@ -13,6 +13,7 @@ export const Container = styled(Box).attrs<{ size: number }>(() => ({
   height: ${({ size }) => size}px;
   border-radius: ${({ size }) => size / 2}px;
   background-color: ${({ theme }) => theme.container};
+  overflow: hidden;
 `;
 
 export const Initials = styled(Text)`

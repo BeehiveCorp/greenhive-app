@@ -8,7 +8,7 @@ import { GLOBAL_METRICS } from '@/theme';
 const Step3: React.FC<{ onNextStep: () => void }> = ({ onNextStep }) => {
   const { user, setUser } = useUser();
 
-  const [repeatedPassword, setRepeatedPassword] = useState('');
+  const [repeatedPassword, setRepeatedPassword] = useState('12345678');
 
   const isSomePasswordEmpty =
     user?.password?.trim().length === 0 || repeatedPassword.trim().length === 0;

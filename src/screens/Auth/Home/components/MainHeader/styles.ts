@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
 
 import { Box, Text } from '@/components';
-import { FONT_FAMILY } from '@/theme';
+import { FONT_FAMILY, GLOBAL_METRICS } from '@/theme';
 
-export const Container = styled(Box)``;
+export const Container = styled(Box)`
+  padding: 0 ${GLOBAL_METRICS.horizontalSpacing}px;
+`;
 
 export const Data = styled(Box)`
   margin-left: 24px;

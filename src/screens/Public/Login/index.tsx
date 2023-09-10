@@ -15,7 +15,7 @@ export default function Login({ navigation }: LoginScreenProps) {
   const { storeUser } = useUser();
   const theme = useTheme();
 
-  const [email, setEmail] = useState('david.adm@gmail.com');
+  const [email, setEmail] = useState('almeida@gmail.com');
   const [password, setPassword] = useState('12345678');
 
   const onLogin = async () => {
