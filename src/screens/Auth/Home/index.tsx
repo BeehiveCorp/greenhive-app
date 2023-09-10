@@ -1,171 +1,68 @@
 import { useContext } from 'react';
-import { ScrollView } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
-import Constants from 'expo-constants';
-import { useTheme } from 'styled-components/native';
 
-import { Box, Scrollable, Text, Wrapper, XpProgress, Button } from '@/components';
+import Constants from 'expo-constants';
+
+import { Box, Button, Scrollable, Wrapper, XpProgress } from '@/components';
 
 import { ThemeContext } from '@/contexts/ThemeContext';
 import { useUser } from '@/contexts/UserContext';
-import { useGamification } from '@/contexts/GamificationContext';
 
-import { GLOBAL_METRICS } from '@/theme';
 import { BOTTOM_TAB_ITEM_SIZE } from '@/navigation/constants';
 
-import { MainHeader } from './components';
+import { Label, Row } from './styles';
 
-import {
-  Ambinews,
-  Article,
-  Chapter,
-  Difficulty,
-  DifficultyText,
-  Item,
-  ItemText,
-  Label,
-  Missions,
-  Rpg,
-} from './styles';
+import { Sections } from './components';
+import { FONT_SIZE } from '@/theme';
 
-import { ARTICLES } from './mock';
+import { HomeScreenProps } from './types';
 
-import Greenie from './assets/greenie.png';
-
-export default function Home() {
+export default function Home({ navigation }: HomeScreenProps) {
   const { toggle } = useContext(ThemeContext);
   const { logout } = useUser();
-  const { updateStats } = useGamification();
-  const theme = useTheme();
+
+  const onCheckAllArticles = () => {
+    navigation.navigate('Articles');
+  };
 
   return (
     <Wrapper style={{ paddingTop: 0 }}>
       <Scrollable
         mainNavigation
-        paddingTop={Constants.statusBarHeight}
-        paddingBottom={BOTTOM_TAB_ITEM_SIZE + 88}
+        paddingTop={Constants.statusBarHeight + 12}
+        paddingBottom={BOTTOM_TAB_ITEM_SIZE + 120}
       >
-        <MainHeader />
+        <Row>
+          <Label>Ambinews</Label>
 
-        <Button
-          text="Up"
-          containerStyle={{ marginTop: 16 }}
-          onPress={() => {
-            updateStats({
-              ambicoinsGains: 0,
-              xpGains: 40,
-            });
-          }}
-        />
-
-        <Ambinews>
-          <Label style={{ paddingHorizontal: GLOBAL_METRICS.horizontalSpacing }}>
-            Ambinews
-          </Label>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingHorizontal: GLOBAL_METRICS.horizontalSpacing,
+          <Button
+            text="Ver tudo"
+            icon="arrow-right"
+            primary
+            containerStyle={{
+              backgroundColor: 'transparent',
+              padding: 0,
+              height: 24,
+              width: 'auto',
             }}
-          >
-            {ARTICLES.map((article, idx) => (
-              <Article
-                key={article.title}
-                style={{ marginRight: idx < ARTICLES.length - 1 ? 12 : 0 }}
-              >
-                <Image
-                  source={{ uri: article.picture }}
-                  style={{ width: '100%', height: 100, borderRadius: 12 }}
-                />
+            textStyle={{ fontSize: FONT_SIZE.Small }}
+            onPress={onCheckAllArticles}
+          />
+        </Row>
+        <Sections.Ambinews />
 
-                <ItemText numberOfLines={2} style={{ marginTop: 8 }}>
-                  {article.title}
-                </ItemText>
-              </Article>
-            ))}
-          </ScrollView>
-        </Ambinews>
+        <Box style={{ marginVertical: 24 }}>
+          <Row>
+            <Label>Missões</Label>
+          </Row>
+          <Sections.Missions />
+        </Box>
 
-        <Missions>
-          <Label>Missões</Label>
+        <Row>
+          <Label>Último capítulo</Label>
+        </Row>
+        <Sections.RpgShortcut />
 
-          <Box horizontal>
-            <Item>
-              <MaterialCommunityIcons
-                name="cellphone-screenshot"
-                size={24}
-                color={theme.primary}
-              />
-              <ItemText>Busca sustentável</ItemText>
-            </Item>
-
-            <Item>
-              <MaterialCommunityIcons
-                name="recycle-variant"
-                size={24}
-                color={theme.primary}
-              />
-              <ItemText>Descarte correto</ItemText>
-            </Item>
-
-            <Item>
-              <MaterialCommunityIcons
-                name="basket-check-outline"
-                size={24}
-                color={theme.primary}
-              />
-              <ItemText>Consumo consciente</ItemText>
-            </Item>
-          </Box>
-        </Missions>
-
-        <Rpg>
-          <Label>RPG</Label>
-
-          <Chapter>
-            <Box
-              style={{ marginBottom: 24 }}
-              horizontal
-              spaceBetween
-              alignItemsCenter
-            >
-              <Box horizontal alignItemsCenter>
-                <Image
-                  source={Greenie}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    marginRight: 8,
-                    borderRadius: 20,
-                  }}
-                />
-
-                <Text heading>Greenie</Text>
-              </Box>
-
-              <Difficulty>
-                <DifficultyText>Difícil</DifficultyText>
-              </Difficulty>
-            </Box>
-
-            <Text heading>O Mundo da Reciclagem II</Text>
-
-            <Text style={{ marginTop: 8, marginBottom: 16 }}>
-              Todavia, o novo modelo estrutural aqui preconizado auxilia a preparação
-              e a composição das novas proposições.
-            </Text>
-
-            <Button
-              containerStyle={{ backgroundColor: theme.background }}
-              text="Continuar"
-            />
-          </Chapter>
-        </Rpg>
-
-        <Box style={{ flex: 1, marginTop: 16 }}>
+        {/* <Box style={{ flex: 1, marginTop: 16 }}>
           <Button
             containerStyle={{ backgroundColor: 'transparent' }}
             text="Toggle theme"
@@ -176,7 +73,7 @@ export default function Home() {
             text="Logout"
             onPress={logout}
           />
-        </Box>
+        </Box> */}
       </Scrollable>
 
       <XpProgress />

@@ -1,12 +1,6 @@
 import { AxiosError } from 'axios';
 import createAxiosInstance from './api';
 
-export interface CreatePayload {
-  name: string;
-  description: string;
-  lore: string;
-}
-
 export type THero = {
   id?: string;
   name: string;

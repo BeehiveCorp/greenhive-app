@@ -13,4 +13,6 @@ export type InputProps = {
   message?: string;
   messageType?: 'ERROR' | 'SUCCESS';
   containerStyle?: ViewStyle;
+  iconColor?: string;
+  iconSize?: number;
 } & TextInputProps;

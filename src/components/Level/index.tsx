@@ -191,7 +191,7 @@ const Level = ({ size = 80, level = 1 }) => {
         alignItemsCenter
         justifyContentCenter
       >
-        <LevelNumber>{level}</LevelNumber>
+        <LevelNumber style={{ fontSize: size / 3 }}>{level}</LevelNumber>
       </Box>
     </Container>
   );

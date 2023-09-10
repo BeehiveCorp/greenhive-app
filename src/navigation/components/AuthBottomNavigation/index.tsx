@@ -7,7 +7,9 @@ import { Home, Feed, RolePlayingGame } from '@/screens';
 
 import { Box } from '@/components';
 
-const Tab = createBottomTabNavigator();
+import { AuthStackParamList } from '../AuthStackNavigation/types';
+
+const Tab = createBottomTabNavigator<AuthStackParamList>();
 
 import useBottomTabStyles, { BlurWrapper, CommonWrapper } from './styles';
 

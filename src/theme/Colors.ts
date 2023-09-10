@@ -9,10 +9,10 @@ export const STATUS_COLORS: StatusTheme = {
 
 export const DARK_THEME: Theme = Object.freeze({
   name: 'dark',
-  background: '#080C0A',
-  container: '#101312',
-  border: '#1D1D1D',
-  title: '#FFFFFF',
+  background: '#09120E',
+  container: '#101916',
+  border: '#16211D',
+  title: '#DCDCDC',
   text: '#767A77',
   primary: '#3A7347',
   secondary: '#C4D2A0',
@@ -21,12 +21,12 @@ export const DARK_THEME: Theme = Object.freeze({
 
 export const LIGHT_THEME: Theme = Object.freeze({
   name: 'light',
-  background: '#FCFFF8',
-  container: '#DCE2D6',
-  border: '#F2F0F0',
-  title: '#000000',
-  text: '#5B5E55',
+  background: '#F5F5F5',
+  container: '#FFFFFF',
+  border: '#E0E0E0',
+  title: '#545454',
+  text: '#898989',
   primary: '#3A7347',
-  secondary: '#C4D2A0',
+  secondary: '#769F10',
   ...STATUS_COLORS,
 });

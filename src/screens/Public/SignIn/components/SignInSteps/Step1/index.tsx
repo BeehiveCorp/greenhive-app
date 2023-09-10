@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Box, Button, Input } from '@/components';
 import { useUser } from '@/contexts/UserContext';
-import { User, UserService } from '@/services';
+import { TUser, UserService } from '@/services';
 import { GLOBAL_METRICS } from '@/theme';
 
 const Step1: React.FC<{ onNextStep: () => void }> = ({ onNextStep }) => {
@@ -13,7 +13,7 @@ const Step1: React.FC<{ onNextStep: () => void }> = ({ onNextStep }) => {
   const [hasError, setHasError] = useState(false);
 
   const onNameChange = (name: string) => {
-    setUser({ ...user, name } as User);
+    setUser({ ...user, name } as TUser);
   };
 
   const validateUsername = async () => {
@@ -22,11 +22,11 @@ const Step1: React.FC<{ onNextStep: () => void }> = ({ onNextStep }) => {
     if (data?.id) {
       setHasError(true);
       setMessage('Username não disponível');
-      setUser({ ...user, username: '' } as User);
+      setUser({ ...user, username: '' } as TUser);
     } else {
       setHasError(false);
       setMessage('Username disponível');
-      setUser({ ...user, username } as User);
+      setUser({ ...user, username } as TUser);
     }
   };
 
@@ -34,7 +34,7 @@ const Step1: React.FC<{ onNextStep: () => void }> = ({ onNextStep }) => {
     if (username.trim().length > 0) {
       validateUsername();
     } else {
-      setUser({ ...user, username: '' } as User);
+      setUser({ ...user, username: '' } as TUser);
     }
   }, [username]);
 

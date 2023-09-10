@@ -33,6 +33,8 @@ const Input: React.FC<InputProps> = ({
   value = '',
   containerStyle,
   onPress,
+  iconSize = 20,
+  iconColor,
   ...rest
 }) => {
   const theme = useTheme();
@@ -62,9 +64,11 @@ const Input: React.FC<InputProps> = ({
             ? theme.success
             : messageType === 'ERROR'
             ? theme.error
+            : iconColor
+            ? iconColor
             : theme.text
         }
-        size={20}
+        size={iconSize}
       />
     );
   };

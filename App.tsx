@@ -25,14 +25,14 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <UserProvider>
-        <GamificationProvider>
-          <ThemeProvider>
-            <BottomSheetModalProvider>
+        <ThemeProvider>
+          <BottomSheetModalProvider>
+            <GamificationProvider>
               <Navigation />
               <RNToast config={toastConfig} topOffset={64} />
-            </BottomSheetModalProvider>
-          </ThemeProvider>
-        </GamificationProvider>
+            </GamificationProvider>
+          </BottomSheetModalProvider>
+        </ThemeProvider>
       </UserProvider>
     </GestureHandlerRootView>
   );

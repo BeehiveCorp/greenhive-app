@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
