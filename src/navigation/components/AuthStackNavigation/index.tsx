@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthBottomNavigation from '../AuthBottomNavigation';
 
-import { Articles } from '@/screens';
+import { Articles, Article } from '@/screens';
 
 import { AuthStackParamList } from './types';
 
@@ -13,6 +13,7 @@ const AuthNavigation: React.FC = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AuthBottomNavigation" component={AuthBottomNavigation} />
       <Stack.Screen name="Articles" component={Articles} />
+      <Stack.Screen name="Article" component={Article} />
     </Stack.Navigator>
   );
 };

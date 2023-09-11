@@ -9,6 +9,7 @@ export type TArticle = {
   reader_id: string;
   article_id: string;
   title: string;
+  content: string;
   thumbnail_url: string;
   xp_reward: number;
   ambicoins_reward: number;
@@ -23,6 +24,20 @@ class ArticleService {
     try {
       const api = await createAxiosInstance();
       const { data } = await api.get('/article/all');
+      return { data };
+    } catch (error) {
+      const exception = error as AxiosError<{ message?: string; error?: string }>;
+
+      return {
+        error: exception.response?.data?.message || exception.response?.data?.error,
+      };
+    }
+  };
+
+  static find = async (id: string): Promise<{ error?: string; data?: TArticle }> => {
+    try {
+      const api = await createAxiosInstance();
+      const { data } = await api.get(`/article/${id}`);
       return { data };
     } catch (error) {
       const exception = error as AxiosError<{ message?: string; error?: string }>;

@@ -1,17 +1,14 @@
 import styled from 'styled-components/native';
 
-import { Box, Text } from '@/components';
-import { DEVICE_DIMENSIONS, FONT_FAMILY, FONT_SIZE } from '@/theme';
+import { Text, Box } from '@/components';
+import { FONT_FAMILY, FONT_SIZE } from '@/theme';
 
-export const Container = styled(Box)``;
-
-export const Article = styled.TouchableOpacity.attrs(() => ({
-  activeOpacity: 0.8,
-}))`
+export const Article = styled(Box)`
   background-color: ${({ theme }) => theme.container};
   padding: 12px;
-  width: ${DEVICE_DIMENSIONS.width * 0.6}px;
+  width: 100%;
   border-radius: 8px;
+  margin-bottom: 16px;
 `;
 
 export const Title = styled(Text)`

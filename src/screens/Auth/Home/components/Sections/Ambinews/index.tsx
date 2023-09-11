@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 import { ScrollView } from 'react-native';
 import { Image } from 'expo-image';
+import { useNavigation } from '@react-navigation/native';
 
 import { GLOBAL_METRICS } from '@/theme';
 import { TArticle, ArticleService } from '@/services/ArticleService';
 
-import { Article, Container, Title } from './styles';
 import { getRelativeUri } from '@/utils/utilities';
+import { HomeScreenProps } from '../../../types';
+
+import { Article, Container, Title } from './styles';
 
 const Ambinews: React.FC = () => {
+  const navigation = useNavigation<HomeScreenProps['navigation']>();
+
   const [articles, setArticles] = useState<TArticle[]>([]);
 
   const getArticles = async () => {
@@ -37,6 +42,7 @@ const Ambinews: React.FC = () => {
           <Article
             key={article.title}
             style={{ marginRight: idx < articles.length - 1 ? 12 : 0 }}
+            onPress={() => navigation.navigate('Article', { id: article?.id ?? '' })}
           >
             <Image
               source={{ uri: getRelativeUri(article.thumbnail_url) }}

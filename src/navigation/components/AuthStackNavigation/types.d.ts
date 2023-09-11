@@ -4,5 +4,5 @@ export type AuthStackParamList = {
   Feed: undefined;
   RolePlayingGame: undefined;
   Articles: undefined;
-  Article: undefined;
+  Article: { id: string };
 };
