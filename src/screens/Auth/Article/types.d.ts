@@ -6,3 +6,15 @@ export type ArticlesScreenProps = {
   route: RouteProp<AuthStackParamList, 'Article'>;
   navigation: StackNavigationProp<AuthStackParamList, 'Article'>;
 };
+
+export type ScrollProps = {
+  layoutMeasurement: {
+    height: number;
+  };
+  contentOffset: {
+    y: number;
+  };
+  contentSize: {
+    height: number;
+  };
+};

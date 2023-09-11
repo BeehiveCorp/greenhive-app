@@ -58,7 +58,10 @@ const BottomSheet = forwardRef<GorgonBottomSheet, BottomSheetProps>(
               {!!title && <Text heading>{title}</Text>}
 
               {!!description && (
-                <Text size="sm" style={{ marginTop: !!title ? 8 : 0 }}>
+                <Text
+                  size="sm"
+                  style={{ marginTop: !!title ? 8 : 0, lineHeight: 20 }}
+                >
                   {description}
                 </Text>
               )}

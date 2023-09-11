@@ -1,11 +1,4 @@
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { ReactNode, createContext, useContext, useMemo, useRef } from 'react';
 
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 

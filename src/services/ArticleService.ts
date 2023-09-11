@@ -17,7 +17,13 @@ export type TArticle = {
   author: TUser;
   created_at: string;
   updated_at: string;
+  readers: string[];
 };
+
+export interface MarkAsReadPayload {
+  reader_id: string;
+  article_id: string;
+}
 
 class ArticleService {
   static getAll = async (): Promise<{ error?: string; data?: TArticle[] }> => {
@@ -45,6 +51,24 @@ class ArticleService {
       return {
         error: exception.response?.data?.message || exception.response?.data?.error,
       };
+    }
+  };
+
+  static view = async (id: string): Promise<void> => {
+    try {
+      const api = await createAxiosInstance();
+      await api.get(`/article/view/${id}`);
+    } catch (error) {
+      const exception = error as AxiosError<{ message?: string; error?: string }>;
+    }
+  };
+
+  static markAsRead = async (payload: MarkAsReadPayload): Promise<void> => {
+    try {
+      const api = await createAxiosInstance();
+      await api.post('/read-article/mark-as-read', payload);
+    } catch (error) {
+      const exception = error as AxiosError<{ message?: string; error?: string }>;
     }
   };
 }

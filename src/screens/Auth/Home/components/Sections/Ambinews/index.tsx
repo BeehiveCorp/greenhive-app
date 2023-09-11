@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { ScrollView } from 'react-native';
 import { Image } from 'expo-image';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { GLOBAL_METRICS } from '@/theme';
 import { TArticle, ArticleService } from '@/services/ArticleService';
@@ -25,9 +25,11 @@ const Ambinews: React.FC = () => {
     setArticles(data ?? []);
   };
 
-  useEffect(() => {
-    getArticles();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getArticles();
+    }, [])
+  );
 
   return (
     <Container>

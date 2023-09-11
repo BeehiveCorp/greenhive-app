@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 
 import { Box, Input, Text, Wrapper } from '@/components';
+import { useUser } from '@/contexts/UserContext';
 
 import { getRelativeUri } from '@/utils/utilities';
 import { GLOBAL_METRICS } from '@/theme';
@@ -12,10 +13,11 @@ import { GLOBAL_METRICS } from '@/theme';
 import { ArticleService, TArticle } from '@/services/ArticleService';
 
 import { ArticlesScreenProps } from './types';
-import { Article, Title } from './styles';
+import { Article, Title, Read } from './styles';
 
 export default function Articles({ navigation }: ArticlesScreenProps) {
   const theme = useTheme();
+  const { user } = useUser();
 
   const [search, setSearch] = useState('');
 
@@ -77,16 +79,30 @@ export default function Articles({ navigation }: ArticlesScreenProps) {
           {searchedArticles.map((article, idx) => (
             <Article
               key={article.title}
-              style={{ marginRight: idx < articles.length - 1 ? 12 : 0 }}
+              style={{ marginRight: idx < articles.length - 1 ? 16 : 0 }}
+              onPress={() =>
+                navigation.navigate('Article', { id: article?.id ?? '' })
+              }
             >
               <Image
                 source={{ uri: getRelativeUri(article.thumbnail_url) }}
-                style={{ width: '100%', height: 80, borderRadius: 12 }}
+                style={{ width: '100%', height: 100, borderRadius: 12 }}
               />
 
-              <Title numberOfLines={2} style={{ marginTop: 8 }}>
+              <Title numberOfLines={2} style={{ marginTop: 16 }}>
                 {article.title}
               </Title>
+
+              {article?.readers.includes(user?.id ?? '') && (
+                <Box horizontal alignItemsCenter style={{ marginTop: 20 }}>
+                  <MaterialCommunityIcons
+                    name="check-circle-outline"
+                    size={20}
+                    color={theme.primary}
+                  />
+                  <Read>Lido</Read>
+                </Box>
+              )}
             </Article>
           ))}
         </Box>
