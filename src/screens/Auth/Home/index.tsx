@@ -62,7 +62,7 @@ export default function Home({ navigation }: HomeScreenProps) {
         </Row>
         <Sections.RpgShortcut />
 
-        {/* <Box style={{ flex: 1, marginTop: 16 }}>
+        <Box style={{ flex: 1, marginTop: 16 }}>
           <Button
             containerStyle={{ backgroundColor: 'transparent' }}
             text="Toggle theme"
@@ -73,7 +73,7 @@ export default function Home({ navigation }: HomeScreenProps) {
             text="Logout"
             onPress={logout}
           />
-        </Box> */}
+        </Box>
       </Scrollable>
 
       <XpProgress />

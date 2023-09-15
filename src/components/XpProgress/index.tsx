@@ -1,7 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text } from 'react-native';
+import { useIsFirstRender } from 'usehooks-ts';
 import chroma from 'chroma-js';
-import { useAnimatedStyle, withSpring } from 'react-native-reanimated';
+
+import Animated, {
+  BounceIn,
+  BounceOut,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+
 import { useTheme } from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -28,9 +36,12 @@ const XpProgress = () => {
   const { user } = useUser();
   const { nextLevelXpNeeded, updateStats } = useGamification();
   const theme = useTheme();
+  const isFirstRender = useIsFirstRender();
 
   const [xpTextWidth, setXpTextWidth] = useState(0);
   const [maxBarWidth, setMaxBarWidth] = useState(0);
+
+  const [animatedAmbicoins, setAnimatedAmbicoins] = useState<number>(0);
 
   const percentage = Math.round((user?.xp ?? 1) * 100) / nextLevelXpNeeded;
 
@@ -51,6 +62,58 @@ const XpProgress = () => {
     }),
     [percentage, maxBarWidth]
   );
+
+  const textAnimationStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withSpring(1),
+      transform: [
+        {
+          scale: withSpring(1),
+        },
+      ],
+    };
+  }, [user?.ambicoins]);
+
+  const animate = (currentValue: number) => {
+    const targetValue = user?.ambicoins || 0;
+    let increment = 1;
+    const maxInterval = 75;
+    const minInterval = 1;
+
+    if (currentValue < targetValue) {
+      const updateValue = (newValue: number) => {
+        setAnimatedAmbicoins(newValue);
+
+        if (newValue < targetValue) {
+          const remainingDifference = targetValue - newValue;
+          increment = Math.ceil(remainingDifference / 10);
+
+          const interval = Math.max(
+            minInterval,
+            Math.min(maxInterval, 1000 / increment)
+          );
+
+          setTimeout(() => {
+            updateValue(newValue + increment);
+          }, interval);
+        }
+      };
+
+      updateValue(currentValue + increment);
+    }
+  };
+
+  useEffect(() => {
+    if (isFirstRender) return;
+
+    if (user?.ambicoins !== animatedAmbicoins) {
+      animate(animatedAmbicoins);
+    }
+  }, [user?.ambicoins]);
+
+  useEffect(() => {
+    setAnimatedAmbicoins(user?.ambicoins || 0);
+  }, []);
 
   return (
     <Container>
@@ -93,10 +156,16 @@ const XpProgress = () => {
 
         <Quantity
           onPress={() => {
-            updateStats({ ambicoinsGains: 10, xpGains: 280 });
+            updateStats({ ambicoinsGains: 100, xpGains: 280 });
           }}
         >
-          {user?.ambicoins}
+          <Animated.Text
+            entering={BounceIn}
+            exiting={BounceOut}
+            style={[textAnimationStyle]}
+          >
+            {Math.round(animatedAmbicoins)}
+          </Animated.Text>
         </Quantity>
       </Ambicoins>
     </Container>
